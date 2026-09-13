@@ -1,0 +1,95 @@
+import React from 'react';
+import {View, Text, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {colors} from '../../theme/colors';
+import {OrderCard, EmptyState} from '../../components';
+import {useOrderStore} from '../../store/orderStore';
+import type {OrdersListScreenProps} from '../../types/navigation';
+import type {Order} from '../../types/order';
+
+export function OrdersListScreen({navigation}: OrdersListScreenProps) {
+  const {orders} = useOrderStore();
+
+  const handleNewOrder = () => {
+    navigation.navigate('NewOrder');
+  };
+
+  const handleOrderPress = (order: Order) => {
+    navigation.navigate('ConfirmOrder', {order});
+  };
+
+  return (
+    <SafeAreaView style={styles.safe} edges={['top']}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.title}>Pedidos</Text>
+          <TouchableOpacity style={styles.addButton} onPress={handleNewOrder}>
+            <Text style={styles.addButtonText}>+</Text>
+          </TouchableOpacity>
+        </View>
+
+        {orders.length === 0 ? (
+          <EmptyState
+            title="Nenhum pedido ainda"
+            message="Quando voce criar pedidos, eles aparecerao aqui."
+            icon={<Text style={styles.emptyIcon}>📋</Text>}
+          />
+        ) : (
+          <FlatList
+            data={orders}
+            keyExtractor={item => item.id}
+            renderItem={({item}) => (
+              <OrderCard
+                order={item}
+                onPress={() => handleOrderPress(item)}
+              />
+            )}
+            contentContainerStyle={styles.list}
+            showsVerticalScrollIndicator={false}
+          />
+        )}
+      </View>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
+  container: {
+    flex: 1,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingBottom: 16,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: colors.text.primary,
+  },
+  addButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  addButtonText: {
+    color: colors.text.inverse,
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  list: {
+    paddingHorizontal: 16,
+  },
+  emptyIcon: {
+    fontSize: 40,
+  },
+});
