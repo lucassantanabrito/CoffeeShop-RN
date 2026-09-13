@@ -38,7 +38,7 @@ export function NewOrderScreen({navigation}: NewOrderScreenProps) {
       items: currentOrderItems,
       status: 'pending' as const,
       total,
-      createdAt: new Date(),
+      createdAt: Date.now(),
     };
 
     navigation.navigate('ConfirmOrder', {order});

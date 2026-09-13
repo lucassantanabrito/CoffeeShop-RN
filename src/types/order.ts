@@ -17,7 +17,7 @@ export interface Order {
   items: DrinkItem[];
   status: OrderStatus;
   total: number;
-  createdAt: Date;
+  createdAt: number;
 }
 
 export interface CreateOrderDTO {

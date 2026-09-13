@@ -47,7 +47,7 @@ export class MemoryOrderService implements IOrderService {
       items: data.items,
       status: 'pending',
       total: data.items.reduce((sum, item) => sum + item.price, 0),
-      createdAt: new Date(),
+      createdAt: Date.now(),
     };
     orders.push(order);
     return order;

@@ -26,7 +26,7 @@ const mockOrder: Order = {
   ],
   status: 'pending',
   total: 52.0,
-  createdAt: new Date(),
+  createdAt: Date.now(),
 };
 
 describe('OrderCard', () => {
