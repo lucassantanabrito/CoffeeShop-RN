@@ -25,5 +25,19 @@ describe('EmptyState', () => {
       />,
     );
     expect(getByText('Vazio')).toBeTruthy();
+    expect(getByText('🧾')).toBeTruthy();
+  });
+
+  it('renders action button when provided', async () => {
+    const onPress = jest.fn();
+    const {getByText} = await render(
+      <EmptyState
+        title="Vazio"
+        message="Nada aqui"
+        actionLabel="Criar"
+        onAction={onPress}
+      />,
+    );
+    expect(getByText('+ Criar')).toBeTruthy();
   });
 });

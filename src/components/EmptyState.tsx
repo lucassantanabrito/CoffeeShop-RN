@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import {Receipt, Clock, Hourglass, CheckCircle, Plus} from 'lucide-react-native';
 import {colors} from '../theme/colors';
 
 export type EmptyStateIcon = 'receipt' | 'clock' | 'hourglass' | 'checkcircle';
@@ -14,11 +13,11 @@ interface EmptyStateProps {
   onAction?: () => void;
 }
 
-const iconMap = {
-  receipt: Receipt,
-  clock: Clock,
-  hourglass: Hourglass,
-  checkcircle: CheckCircle,
+const iconMap: Record<EmptyStateIcon, string> = {
+  receipt: '🧾',
+  clock: '⏰',
+  hourglass: '⏳',
+  checkcircle: '✅',
 };
 
 export function EmptyState({
@@ -29,21 +28,20 @@ export function EmptyState({
   actionLabel,
   onAction,
 }: EmptyStateProps) {
-  const IconComponent = icon ? iconMap[icon] : null;
+  const iconEmoji = icon ? iconMap[icon] : null;
 
   return (
     <View style={styles.card}>
-      {IconComponent && (
+      {iconEmoji && (
         <View style={[styles.iconCircle, {backgroundColor: iconBackgroundColor}]}>
-          <IconComponent size={36} color={colors.primary} />
+          <Text style={styles.iconText}>{iconEmoji}</Text>
         </View>
       )}
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.message}>{message}</Text>
       {actionLabel && onAction && (
         <TouchableOpacity style={styles.actionButton} onPress={onAction}>
-          <Plus size={18} color={colors.text.inverse} />
-          <Text style={styles.actionButtonText}>{actionLabel}</Text>
+          <Text style={styles.actionButtonText}>+ {actionLabel}</Text>
         </TouchableOpacity>
       )}
     </View>
@@ -70,6 +68,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  iconText: {
+    fontSize: 36,
+  },
   title: {
     fontSize: 18,
     fontWeight: '600',
@@ -87,9 +88,6 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     paddingHorizontal: 24,
     paddingVertical: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
     marginTop: 8,
   },
   actionButtonText: {
