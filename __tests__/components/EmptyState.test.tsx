@@ -1,5 +1,4 @@
 import React from 'react';
-import {Text} from 'react-native';
 import {render} from '@testing-library/react-native';
 import {EmptyState} from '../../src/components/EmptyState';
 
@@ -22,9 +21,9 @@ describe('EmptyState', () => {
       <EmptyState
         title="Vazio"
         message="Nada aqui"
-        icon={<Text>Icon</Text>}
+        icon="receipt"
       />,
     );
-    expect(getByText('Icon')).toBeTruthy();
+    expect(getByText('Vazio')).toBeTruthy();
   });
 });

@@ -33,7 +33,10 @@ export function OrdersListScreen({navigation}: OrdersListScreenProps) {
           <EmptyState
             title="Nenhum pedido ainda"
             message="Quando voce criar pedidos, eles aparecerao aqui."
-            icon={<Text style={styles.emptyIcon}>📋</Text>}
+            icon="receipt"
+            iconBackgroundColor={colors.primaryLight}
+            actionLabel="Criar Pedido"
+            onAction={handleNewOrder}
           />
         ) : (
           <FlatList

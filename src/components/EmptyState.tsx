@@ -1,15 +1,25 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {Receipt, Clock, Hourglass, CheckCircle, Plus} from 'lucide-react-native';
 import {colors} from '../theme/colors';
+
+export type EmptyStateIcon = 'receipt' | 'clock' | 'hourglass' | 'checkcircle';
 
 interface EmptyStateProps {
   title: string;
   message: string;
-  icon?: React.ReactNode;
+  icon?: EmptyStateIcon;
   iconBackgroundColor?: string;
   actionLabel?: string;
   onAction?: () => void;
 }
+
+const iconMap = {
+  receipt: Receipt,
+  clock: Clock,
+  hourglass: Hourglass,
+  checkcircle: CheckCircle,
+};
 
 export function EmptyState({
   title,
@@ -19,17 +29,20 @@ export function EmptyState({
   actionLabel,
   onAction,
 }: EmptyStateProps) {
+  const IconComponent = icon ? iconMap[icon] : null;
+
   return (
     <View style={styles.card}>
-      {icon && (
+      {IconComponent && (
         <View style={[styles.iconCircle, {backgroundColor: iconBackgroundColor}]}>
-          {icon}
+          <IconComponent size={36} color={colors.primary} />
         </View>
       )}
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.message}>{message}</Text>
       {actionLabel && onAction && (
         <TouchableOpacity style={styles.actionButton} onPress={onAction}>
+          <Plus size={18} color={colors.text.inverse} />
           <Text style={styles.actionButtonText}>{actionLabel}</Text>
         </TouchableOpacity>
       )}

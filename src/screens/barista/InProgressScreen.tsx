@@ -33,7 +33,7 @@ export function InProgressScreen({activeTab, onTabChange}: InProgressScreenProps
           <EmptyState
             title="Nenhum pedido em andamento"
             message="Pedidos em preparo aparecerao aqui."
-            icon={<Text style={styles.emptyIcon}>⏳</Text>}
+            icon="hourglass"
             iconBackgroundColor={colors.primaryLight}
           />
         </View>
@@ -90,8 +90,5 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingHorizontal: 16,
-  },
-  emptyIcon: {
-    fontSize: 36,
   },
 });

@@ -22,7 +22,7 @@ export function EmptyOrdersScreen({navigation}: OrdersListScreenProps) {
           <EmptyState
             title="Nenhum pedido ainda"
             message="Quando voce criar pedidos, eles aparecerao aqui."
-            icon={<Text style={styles.emptyIcon}>📋</Text>}
+            icon="receipt"
             iconBackgroundColor={colors.primaryLight}
             actionLabel="Criar Pedido"
             onAction={() => navigation.navigate('NewOrder')}
@@ -70,8 +70,5 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 16,
     paddingTop: 40,
-  },
-  emptyIcon: {
-    fontSize: 36,
   },
 });
