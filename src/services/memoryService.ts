@@ -62,6 +62,17 @@ export class MemoryOrderService implements IOrderService {
     return order;
   }
 
+  async updateOrder(id: string, data: CreateOrderDTO): Promise<Order> {
+    const order = orders.find(o => o.id === id);
+    if (!order) {
+      throw new Error(`Order ${id} not found`);
+    }
+    order.customerName = data.customerName;
+    order.items = data.items;
+    order.total = data.items.reduce((sum, item) => sum + item.price, 0);
+    return order;
+  }
+
   async deleteOrder(id: string): Promise<void> {
     const index = orders.findIndex(o => o.id === id);
     if (index !== -1) {

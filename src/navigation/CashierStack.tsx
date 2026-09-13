@@ -3,6 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {OrdersListScreen} from '../screens/cashier/OrdersListScreen';
 import {NewOrderScreen} from '../screens/cashier/NewOrderScreen';
 import {ConfirmOrderScreen} from '../screens/cashier/ConfirmOrderScreen';
+import {OrderDetailScreen} from '../screens/cashier/OrderDetailScreen';
 import type {CashierStackParamList} from '../types/navigation';
 
 const Stack = createNativeStackNavigator<CashierStackParamList>();
@@ -13,6 +14,7 @@ export function CashierStack() {
       <Stack.Screen name="OrdersList" component={OrdersListScreen} />
       <Stack.Screen name="NewOrder" component={NewOrderScreen} />
       <Stack.Screen name="ConfirmOrder" component={ConfirmOrderScreen} />
+      <Stack.Screen name="OrderDetail" component={OrderDetailScreen} />
     </Stack.Navigator>
   );
 }

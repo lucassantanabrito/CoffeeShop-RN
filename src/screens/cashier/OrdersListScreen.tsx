@@ -9,14 +9,14 @@ import type {Order} from '../../types/order';
 
 export function OrdersListScreen({navigation}: OrdersListScreenProps) {
   const {orders} = useOrderStore();
-  const sortedOrders = [...orders].sort((a, b) => b.createdAt - a.createdAt);
+  const sortedOrders = [...orders].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
   const handleNewOrder = () => {
     navigation.navigate('NewOrder');
   };
 
   const handleOrderPress = (order: Order) => {
-    navigation.navigate('ConfirmOrder', {order});
+    navigation.navigate('OrderDetail', {order});
   };
 
   return (
