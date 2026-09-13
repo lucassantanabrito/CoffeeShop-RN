@@ -23,7 +23,7 @@ export function BaristaTabs() {
   };
 
   return (
-    <SafeAreaView style={styles.safe} edges={['bottom']}>
+    <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
       <View style={styles.container}>
         {renderScreen()}
       </View>
