@@ -1,10 +1,15 @@
 import React from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {colors} from '../../theme/colors';
-import {OrderCard, EmptyState} from '../../components';
+import {OrderCard, EmptyState, BaristaTabBar} from '../../components';
 import {useOrderStore} from '../../store/orderStore';
 
-export function CompletedScreen() {
+interface CompletedScreenProps {
+  activeTab: string;
+  onTabChange: (tab: string) => void;
+}
+
+export function CompletedScreen({activeTab, onTabChange}: CompletedScreenProps) {
   const {getCompletedOrders, getCompletedCount} = useOrderStore();
   const completedOrders = getCompletedOrders();
   const completedCount = getCompletedCount();
@@ -17,6 +22,8 @@ export function CompletedScreen() {
           <Text style={styles.iconText}>☕</Text>
         </View>
       </View>
+
+      <BaristaTabBar activeTab={activeTab} onTabChange={onTabChange} />
 
       {completedOrders.length === 0 ? (
         <View style={styles.content}>

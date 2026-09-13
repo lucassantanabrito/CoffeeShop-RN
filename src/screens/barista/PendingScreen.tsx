@@ -1,10 +1,15 @@
 import React from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {colors} from '../../theme/colors';
-import {OrderCard, EmptyState} from '../../components';
+import {OrderCard, EmptyState, BaristaTabBar} from '../../components';
 import {useOrderStore} from '../../store/orderStore';
 
-export function PendingScreen() {
+interface PendingScreenProps {
+  activeTab: string;
+  onTabChange: (tab: string) => void;
+}
+
+export function PendingScreen({activeTab, onTabChange}: PendingScreenProps) {
   const {getPendingOrders, updateOrderStatus} = useOrderStore();
   const pendingOrders = getPendingOrders();
 
@@ -20,6 +25,8 @@ export function PendingScreen() {
           <Text style={styles.iconText}>☕</Text>
         </View>
       </View>
+
+      <BaristaTabBar activeTab={activeTab} onTabChange={onTabChange} />
 
       {pendingOrders.length === 0 ? (
         <View style={styles.content}>

@@ -1,10 +1,15 @@
 import React from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {colors} from '../../theme/colors';
-import {OrderCard, EmptyState} from '../../components';
+import {OrderCard, EmptyState, BaristaTabBar} from '../../components';
 import {useOrderStore} from '../../store/orderStore';
 
-export function InProgressScreen() {
+interface InProgressScreenProps {
+  activeTab: string;
+  onTabChange: (tab: string) => void;
+}
+
+export function InProgressScreen({activeTab, onTabChange}: InProgressScreenProps) {
   const {getInProgressOrders, updateOrderStatus} = useOrderStore();
   const inProgressOrders = getInProgressOrders();
 
@@ -20,6 +25,8 @@ export function InProgressScreen() {
           <Text style={styles.iconText}>☕</Text>
         </View>
       </View>
+
+      <BaristaTabBar activeTab={activeTab} onTabChange={onTabChange} />
 
       {inProgressOrders.length === 0 ? (
         <View style={styles.content}>

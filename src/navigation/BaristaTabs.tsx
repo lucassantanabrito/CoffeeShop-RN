@@ -4,7 +4,6 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {PendingScreen} from '../screens/barista/PendingScreen';
 import {InProgressScreen} from '../screens/barista/InProgressScreen';
 import {CompletedScreen} from '../screens/barista/CompletedScreen';
-import {BaristaTabBar} from '../components/BaristaTabBar';
 import {colors} from '../theme/colors';
 
 export function BaristaTabs() {
@@ -13,39 +12,31 @@ export function BaristaTabs() {
   const renderScreen = () => {
     switch (activeTab) {
       case 'pending':
-        return <PendingScreen />;
+        return <PendingScreen activeTab={activeTab} onTabChange={setActiveTab} />;
       case 'in_progress':
-        return <InProgressScreen />;
+        return <InProgressScreen activeTab={activeTab} onTabChange={setActiveTab} />;
       case 'completed':
-        return <CompletedScreen />;
+        return <CompletedScreen activeTab={activeTab} onTabChange={setActiveTab} />;
       default:
-        return <PendingScreen />;
+        return <PendingScreen activeTab={activeTab} onTabChange={setActiveTab} />;
     }
   };
 
   return (
-    <View style={styles.container}>
-      <SafeAreaView style={styles.safeTop} edges={['top']}>
-        <BaristaTabBar activeTab={activeTab} onTabChange={setActiveTab} />
-      </SafeAreaView>
-      <View style={styles.content}>{renderScreen()}</View>
-      <SafeAreaView style={styles.safeBottom} edges={['bottom']} />
-    </View>
+    <SafeAreaView style={styles.safe} edges={['bottom']}>
+      <View style={styles.container}>
+        {renderScreen()}
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safe: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
   container: {
     flex: 1,
-    backgroundColor: colors.background,
-  },
-  safeTop: {
-    backgroundColor: colors.background,
-  },
-  content: {
-    flex: 1,
-  },
-  safeBottom: {
-    backgroundColor: colors.background,
   },
 });
