@@ -44,8 +44,6 @@ export function ConfirmOrderScreen({route, navigation}: ConfirmOrderScreenProps)
         <View style={styles.progressBar}>
           <View style={[styles.progressSegment, styles.progressActive]} />
           <View style={[styles.progressSegment, styles.progressActive]} />
-          <View style={[styles.progressSegment, styles.progressActive]} />
-          <View style={[styles.progressSegment, styles.progressActive]} />
         </View>
 
         <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>

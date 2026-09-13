@@ -56,8 +56,6 @@ export function NewOrderScreen({navigation}: NewOrderScreenProps) {
 
         <View style={styles.progressBar}>
           <View style={[styles.progressSegment, styles.progressActive]} />
-          <View style={[styles.progressSegment, styles.progressActive]} />
-          <View style={styles.progressSegment} />
           <View style={styles.progressSegment} />
         </View>
 
