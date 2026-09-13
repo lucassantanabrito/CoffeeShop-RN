@@ -23,12 +23,10 @@ export function EmptyOrdersScreen({navigation}: OrdersListScreenProps) {
             title="Nenhum pedido ainda"
             message="Quando voce criar pedidos, eles aparecerao aqui."
             icon={<Text style={styles.emptyIcon}>📋</Text>}
+            iconBackgroundColor={colors.primaryLight}
+            actionLabel="Criar Pedido"
+            onAction={() => navigation.navigate('NewOrder')}
           />
-          <TouchableOpacity
-            style={styles.createButton}
-            onPress={() => navigation.navigate('NewOrder')}>
-            <Text style={styles.createButtonText}>+ Criar Pedido</Text>
-          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
@@ -70,23 +68,10 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     paddingHorizontal: 16,
+    paddingTop: 40,
   },
   emptyIcon: {
-    fontSize: 40,
-  },
-  createButton: {
-    backgroundColor: colors.primary,
-    borderRadius: 26,
-    paddingVertical: 14,
-    paddingHorizontal: 32,
-    marginTop: 24,
-  },
-  createButtonText: {
-    color: colors.text.inverse,
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 36,
   },
 });

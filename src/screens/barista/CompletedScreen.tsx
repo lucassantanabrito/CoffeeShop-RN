@@ -31,6 +31,7 @@ export function CompletedScreen({activeTab, onTabChange}: CompletedScreenProps) 
             title="Nenhum pedido concluido"
             message="Os pedidos finalizados aparecerao aqui."
             icon={<Text style={styles.emptyIcon}>✅</Text>}
+            iconBackgroundColor="#D1FAE5"
           />
         </View>
       ) : (
@@ -90,12 +91,13 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: 16,
+    paddingTop: 60,
   },
   list: {
     paddingHorizontal: 16,
   },
   emptyIcon: {
-    fontSize: 40,
+    fontSize: 36,
   },
   summaryCard: {
     flexDirection: 'row',

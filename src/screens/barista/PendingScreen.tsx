@@ -32,8 +32,9 @@ export function PendingScreen({activeTab, onTabChange}: PendingScreenProps) {
         <View style={styles.content}>
           <EmptyState
             title="Nenhum pedido pendente"
-            message="Novos pedidos aparecerao aqui."
-            icon={<Text style={styles.emptyIcon}>📋</Text>}
+            message="Todos os pedidos foram iniciados!"
+            icon={<Text style={styles.emptyIcon}>⏰</Text>}
+            iconBackgroundColor="#FEF3C7"
           />
         </View>
       ) : (
@@ -85,11 +86,12 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: 16,
+    paddingTop: 60,
   },
   list: {
     paddingHorizontal: 16,
   },
   emptyIcon: {
-    fontSize: 40,
+    fontSize: 36,
   },
 });
