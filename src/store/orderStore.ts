@@ -102,11 +102,20 @@ export const useOrderStore = create<OrderState>((set, get) => ({
     return get().orders.filter(o => o.status === status);
   },
 
-  getPendingOrders: () => get().orders.filter(o => o.status === 'pending'),
+  getPendingOrders: () =>
+    get()
+      .orders.filter(o => o.status === 'pending')
+      .sort((a, b) => a.createdAt - b.createdAt),
 
-  getInProgressOrders: () => get().orders.filter(o => o.status === 'in_progress'),
+  getInProgressOrders: () =>
+    get()
+      .orders.filter(o => o.status === 'in_progress')
+      .sort((a, b) => a.createdAt - b.createdAt),
 
-  getCompletedOrders: () => get().orders.filter(o => o.status === 'completed'),
+  getCompletedOrders: () =>
+    get()
+      .orders.filter(o => o.status === 'completed')
+      .sort((a, b) => a.createdAt - b.createdAt),
 
   getOrdersTotal: () => get().orders.reduce((sum, o) => sum + o.total, 0),
 
