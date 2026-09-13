@@ -35,6 +35,9 @@ export function DrinkItemCard({item, onRemove}: DrinkItemCardProps) {
             </View>
           )}
         </View>
+        {item.notes ? (
+          <Text style={styles.notes}>{item.notes}</Text>
+        ) : null}
       </View>
 
       <View style={styles.right}>
@@ -114,5 +117,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: colors.text.secondary,
     fontWeight: '600',
+  },
+  notes: {
+    fontSize: 12,
+    color: colors.text.secondary,
+    fontStyle: 'italic',
+    marginTop: 2,
   },
 });
