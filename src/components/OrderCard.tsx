@@ -39,6 +39,9 @@ export function OrderCard({
                 {item.quantity}x {item.type.replace('_', ' ')}
                 {item.milk !== 'normal' ? ` (${item.milk})` : ''}
               </Text>
+              {item.notes ? (
+                <Text style={styles.itemNotes}>{item.notes}</Text>
+              ) : null}
             </View>
           ))}
         </View>
@@ -97,6 +100,12 @@ const styles = StyleSheet.create({
   itemText: {
     fontSize: 14,
     color: colors.text.secondary,
+  },
+  itemNotes: {
+    fontSize: 12,
+    color: colors.text.secondary,
+    fontStyle: 'italic',
+    marginTop: 2,
   },
   footer: {
     flexDirection: 'row',
