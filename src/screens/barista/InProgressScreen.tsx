@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {colors} from '../../theme/colors';
 import {OrderCard, EmptyState} from '../../components';
 import {useOrderStore} from '../../store/orderStore';
@@ -14,48 +13,42 @@ export function InProgressScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.safe} edges={['top']}>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Barista</Text>
-          <View style={styles.iconPlaceholder}>
-            <Text style={styles.iconText}>☕</Text>
-          </View>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>Barista</Text>
+        <View style={styles.iconPlaceholder}>
+          <Text style={styles.iconText}>☕</Text>
         </View>
-
-        {inProgressOrders.length === 0 ? (
-          <View style={styles.content}>
-            <EmptyState
-              title="Nenhum pedido em andamento"
-              message="Pedidos em preparo aparecerao aqui."
-              icon={<Text style={styles.emptyIcon}>⏳</Text>}
-            />
-          </View>
-        ) : (
-          <FlatList
-            data={inProgressOrders}
-            keyExtractor={item => item.id}
-            renderItem={({item}) => (
-              <OrderCard
-                order={item}
-                actionLabel="Marcar como Pronto"
-                onAction={() => handleCompleteOrder(item.id)}
-              />
-            )}
-            contentContainerStyle={styles.list}
-            showsVerticalScrollIndicator={false}
-          />
-        )}
       </View>
-    </SafeAreaView>
+
+      {inProgressOrders.length === 0 ? (
+        <View style={styles.content}>
+          <EmptyState
+            title="Nenhum pedido em andamento"
+            message="Pedidos em preparo aparecerao aqui."
+            icon={<Text style={styles.emptyIcon}>⏳</Text>}
+          />
+        </View>
+      ) : (
+        <FlatList
+          data={inProgressOrders}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => (
+            <OrderCard
+              order={item}
+              actionLabel="Marcar como Pronto"
+              onAction={() => handleCompleteOrder(item.id)}
+            />
+          )}
+          contentContainerStyle={styles.list}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
   container: {
     flex: 1,
   },

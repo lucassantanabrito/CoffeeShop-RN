@@ -24,21 +24,28 @@ export function BaristaTabs() {
   };
 
   return (
-    <SafeAreaView style={styles.safe} edges={['bottom']}>
-      <View style={styles.container}>
-        {renderScreen()}
+    <View style={styles.container}>
+      <SafeAreaView style={styles.safeTop} edges={['top']}>
         <BaristaTabBar activeTab={activeTab} onTabChange={setActiveTab} />
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+      <View style={styles.content}>{renderScreen()}</View>
+      <SafeAreaView style={styles.safeBottom} edges={['bottom']} />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  safe: {
+  container: {
     flex: 1,
     backgroundColor: colors.background,
   },
-  container: {
+  safeTop: {
+    backgroundColor: colors.background,
+  },
+  content: {
     flex: 1,
+  },
+  safeBottom: {
+    backgroundColor: colors.background,
   },
 });

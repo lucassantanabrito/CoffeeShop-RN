@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {colors} from '../../theme/colors';
 import {OrderCard, EmptyState} from '../../components';
 import {useOrderStore} from '../../store/orderStore';
@@ -11,56 +10,50 @@ export function CompletedScreen() {
   const completedCount = getCompletedCount();
 
   return (
-    <SafeAreaView style={styles.safe} edges={['top']}>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Barista</Text>
-          <View style={styles.iconPlaceholder}>
-            <Text style={styles.iconText}>☕</Text>
-          </View>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>Barista</Text>
+        <View style={styles.iconPlaceholder}>
+          <Text style={styles.iconText}>☕</Text>
         </View>
-
-        {completedOrders.length === 0 ? (
-          <View style={styles.content}>
-            <EmptyState
-              title="Nenhum pedido concluido"
-              message="Os pedidos finalizados aparecerao aqui."
-              icon={<Text style={styles.emptyIcon}>✅</Text>}
-            />
-          </View>
-        ) : (
-          <>
-            <FlatList
-              data={completedOrders}
-              keyExtractor={item => item.id}
-              renderItem={({item}) => <OrderCard order={item} showItems={false} />}
-              contentContainerStyle={styles.list}
-              showsVerticalScrollIndicator={false}
-            />
-            <View style={styles.summaryCard}>
-              <View style={styles.summaryIcon}>
-                <Text style={styles.summaryIconText}>🎉</Text>
-              </View>
-              <View style={styles.summaryInfo}>
-                <Text style={styles.summaryTitle}>Bom trabalho!</Text>
-                <Text style={styles.summaryText}>
-                  {completedCount} pedido{completedCount !== 1 ? 's' : ''} concluido
-                  {completedCount !== 1 ? 's' : ''} hoje
-                </Text>
-              </View>
-            </View>
-          </>
-        )}
       </View>
-    </SafeAreaView>
+
+      {completedOrders.length === 0 ? (
+        <View style={styles.content}>
+          <EmptyState
+            title="Nenhum pedido concluido"
+            message="Os pedidos finalizados aparecerao aqui."
+            icon={<Text style={styles.emptyIcon}>✅</Text>}
+          />
+        </View>
+      ) : (
+        <>
+          <FlatList
+            data={completedOrders}
+            keyExtractor={item => item.id}
+            renderItem={({item}) => <OrderCard order={item} showItems={false} />}
+            contentContainerStyle={styles.list}
+            showsVerticalScrollIndicator={false}
+          />
+          <View style={styles.summaryCard}>
+            <View style={styles.summaryIcon}>
+              <Text style={styles.summaryIconText}>🎉</Text>
+            </View>
+            <View style={styles.summaryInfo}>
+              <Text style={styles.summaryTitle}>Bom trabalho!</Text>
+              <Text style={styles.summaryText}>
+                {completedCount} pedido{completedCount !== 1 ? 's' : ''} concluido
+                {completedCount !== 1 ? 's' : ''} hoje
+              </Text>
+            </View>
+          </View>
+        </>
+      )}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  safe: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
   container: {
     flex: 1,
   },
