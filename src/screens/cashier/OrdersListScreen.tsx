@@ -9,6 +9,7 @@ import type {Order} from '../../types/order';
 
 export function OrdersListScreen({navigation}: OrdersListScreenProps) {
   const {orders} = useOrderStore();
+  const sortedOrders = [...orders].sort((a, b) => b.createdAt - a.createdAt);
 
   const handleNewOrder = () => {
     navigation.navigate('NewOrder');
@@ -28,7 +29,7 @@ export function OrdersListScreen({navigation}: OrdersListScreenProps) {
           </TouchableOpacity>
         </View>
 
-        {orders.length === 0 ? (
+        {sortedOrders.length === 0 ? (
           <EmptyState
             title="Nenhum pedido ainda"
             message="Quando voce criar pedidos, eles aparecerao aqui."
@@ -36,7 +37,7 @@ export function OrdersListScreen({navigation}: OrdersListScreenProps) {
           />
         ) : (
           <FlatList
-            data={orders}
+            data={sortedOrders}
             keyExtractor={item => item.id}
             renderItem={({item}) => (
               <OrderCard
