@@ -1,13 +1,14 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {colors} from '../theme/colors';
+import type {BaristaTabKey} from '../types/navigation';
 
 interface BaristaTabBarProps {
-  activeTab: string;
-  onTabChange: (tab: string) => void;
+  activeTab: BaristaTabKey;
+  onTabChange: (tab: BaristaTabKey) => void;
 }
 
-const TABS = [
+const TABS: {key: BaristaTabKey; label: string}[] = [
   {key: 'pending', label: 'Pendentes'},
   {key: 'in_progress', label: 'Fazendo'},
   {key: 'completed', label: 'Concluidos'},

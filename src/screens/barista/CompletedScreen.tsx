@@ -3,10 +3,11 @@ import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {colors} from '../../theme/colors';
 import {OrderCard, EmptyState, BaristaTabBar} from '../../components';
 import {useOrderStore} from '../../store/orderStore';
+import type {BaristaTabKey} from '../../types/navigation';
 
 interface CompletedScreenProps {
-  activeTab: string;
-  onTabChange: (tab: string) => void;
+  activeTab: BaristaTabKey;
+  onTabChange: (tab: BaristaTabKey) => void;
 }
 
 export function CompletedScreen({activeTab, onTabChange}: CompletedScreenProps) {

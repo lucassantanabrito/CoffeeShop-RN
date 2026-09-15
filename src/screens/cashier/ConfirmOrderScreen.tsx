@@ -7,11 +7,11 @@ import {useOrderStore} from '../../store/orderStore';
 import type {ConfirmOrderScreenProps} from '../../types/navigation';
 
 export function ConfirmOrderScreen({route, navigation}: ConfirmOrderScreenProps) {
-  const {order} = route.params;
+  const {customerName, items, total} = route.params;
   const {submitOrder, clearCurrentOrder} = useOrderStore();
 
-  const subtotal = order.items.reduce((sum, item) => sum + item.price, 0);
-  const milkExtra = order.items.reduce((sum, item) => {
+  const subtotal = items.reduce((sum, item) => sum + item.price, 0);
+  const milkExtra = items.reduce((sum, item) => {
     if (item.milk === 'zero') {
       return sum + 2 * item.quantity;
     }
@@ -53,17 +53,17 @@ export function ConfirmOrderScreen({route, navigation}: ConfirmOrderScreenProps)
             </View>
             <View>
               <Text style={styles.customerLabel}>Cliente</Text>
-              <Text style={styles.customerName}>{order.customerName}</Text>
+              <Text style={styles.customerName}>{customerName}</Text>
             </View>
           </View>
 
           <View style={styles.orderHeader}>
             <Text style={styles.sectionTitle}>Resumo do Pedido</Text>
-            <StatusChip status={order.status} />
+            <StatusChip status="pending" />
           </View>
 
           <View style={styles.itemsContainer}>
-            {order.items.map(item => (
+            {items.map(item => (
               <DrinkItemCard key={item.id} item={item} />
             ))}
           </View>
@@ -71,8 +71,8 @@ export function ConfirmOrderScreen({route, navigation}: ConfirmOrderScreenProps)
           <View style={styles.breakdown}>
             <View style={styles.breakdownRow}>
               <Text style={styles.breakdownLabel}>
-                Subtotal ({order.items.length} bebida
-                {order.items.length > 1 ? 's' : ''})
+                Subtotal ({items.length} bebida
+                {items.length > 1 ? 's' : ''})
               </Text>
               <Text style={styles.breakdownValue}>R$ {subtotal.toFixed(2)}</Text>
             </View>
@@ -87,7 +87,7 @@ export function ConfirmOrderScreen({route, navigation}: ConfirmOrderScreenProps)
             <View style={styles.divider} />
             <View style={styles.breakdownRow}>
               <Text style={styles.totalLabel}>Total</Text>
-              <Text style={styles.totalValue}>R$ {order.total.toFixed(2)}</Text>
+              <Text style={styles.totalValue}>R$ {total.toFixed(2)}</Text>
             </View>
           </View>
         </ScrollView>

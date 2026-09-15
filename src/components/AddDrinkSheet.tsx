@@ -38,7 +38,7 @@ export function AddDrinkSheet({
   const handleAdd = () => {
     if (!selectedDrink) return;
     const item: DrinkItem = {
-      id: Date.now().toString(),
+      id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
       type: selectedDrink,
       quantity,
       milk: selectedMilk,

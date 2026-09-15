@@ -1,13 +1,13 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import type { Order } from './order';
+import type { DrinkItem } from './order';
 
 export type CashierStackParamList = {
   OrdersList: undefined;
   NewOrder: undefined;
-  ConfirmOrder: { order: Order };
-  OrderDetail: { order: Order };
+  ConfirmOrder: { customerName: string; items: DrinkItem[]; total: number };
+  OrderDetail: { orderId: string };
 };
 
 export type BaristaTabParamList = {
@@ -15,6 +15,8 @@ export type BaristaTabParamList = {
   InProgress: undefined;
   Completed: undefined;
 };
+
+export type BaristaTabKey = 'pending' | 'in_progress' | 'completed';
 
 export type MainTabParamList = {
   CashierTab: NavigatorScreenParams<CashierStackParamList>;

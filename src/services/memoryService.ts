@@ -2,8 +2,6 @@ import type {IOrderService} from './orderService';
 import type {IDrinkService, DrinkOption, MilkOption} from './drinkService';
 import type {Order, CreateOrderDTO, OrderStatus, DrinkType, MilkType} from '../types/order';
 
-let orderCounter = 0;
-
 const DRINK_PRICES: Record<DrinkType, number> = {
   espresso: 8.0,
   latte: 18.0,
@@ -28,55 +26,61 @@ const MILK_OPTIONS: MilkOption[] = [
   {type: 'vegetal', label: 'Vegetal', priceAdd: 4.0},
 ];
 
-const orders: Order[] = [];
-
 export class MemoryOrderService implements IOrderService {
+  private orders: Order[] = [];
+  private orderCounter = 0;
+
   async getOrders(): Promise<Order[]> {
-    return [...orders];
+    return [...this.orders];
   }
 
   async getOrderById(id: string): Promise<Order | null> {
-    return orders.find(o => o.id === id) ?? null;
+    return this.orders.find(o => o.id === id) ?? null;
   }
 
   async createOrder(data: CreateOrderDTO): Promise<Order> {
-    orderCounter++;
+    this.orderCounter++;
     const order: Order = {
-      id: String(orderCounter).padStart(3, '0'),
+      id: String(this.orderCounter).padStart(3, '0'),
       customerName: data.customerName,
       items: data.items,
       status: 'pending',
       total: data.items.reduce((sum, item) => sum + item.price, 0),
       createdAt: Date.now(),
     };
-    orders.push(order);
+    this.orders.push(order);
     return order;
   }
 
   async updateOrderStatus(id: string, status: OrderStatus): Promise<Order> {
-    const order = orders.find(o => o.id === id);
-    if (!order) {
+    const index = this.orders.findIndex(o => o.id === id);
+    if (index === -1) {
       throw new Error(`Order ${id} not found`);
     }
-    order.status = status;
-    return order;
+    const updated: Order = {...this.orders[index], status};
+    this.orders[index] = updated;
+    return updated;
   }
 
   async updateOrder(id: string, data: CreateOrderDTO): Promise<Order> {
-    const order = orders.find(o => o.id === id);
-    if (!order) {
+    const index = this.orders.findIndex(o => o.id === id);
+    if (index === -1) {
       throw new Error(`Order ${id} not found`);
     }
-    order.customerName = data.customerName;
-    order.items = data.items;
-    order.total = data.items.reduce((sum, item) => sum + item.price, 0);
-    return order;
+    const updated: Order = {
+      ...this.orders[index],
+      customerName: data.customerName,
+      items: data.items,
+      total: data.items.reduce((sum, item) => sum + item.price, 0),
+    };
+    this.orders[index] = updated;
+    return updated;
   }
 
   async deleteOrder(id: string): Promise<void> {
-    const index = orders.findIndex(o => o.id === id);
+    const index = this.orders.findIndex(o => o.id === id);
     if (index !== -1) {
-      orders.splice(index, 1);
+      this.orders.splice(index, 1);
     }
   }
 }

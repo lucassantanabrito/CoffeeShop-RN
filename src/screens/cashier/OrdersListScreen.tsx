@@ -5,7 +5,6 @@ import {colors} from '../../theme/colors';
 import {OrderCard, EmptyState} from '../../components';
 import {useOrderStore} from '../../store/orderStore';
 import type {OrdersListScreenProps} from '../../types/navigation';
-import type {Order} from '../../types/order';
 
 export function OrdersListScreen({navigation}: OrdersListScreenProps) {
   const {orders} = useOrderStore();
@@ -15,8 +14,8 @@ export function OrdersListScreen({navigation}: OrdersListScreenProps) {
     navigation.navigate('NewOrder');
   };
 
-  const handleOrderPress = (order: Order) => {
-    navigation.navigate('OrderDetail', {order});
+  const handleOrderPress = (orderId: string) => {
+    navigation.navigate('OrderDetail', {orderId});
   };
 
   return (
@@ -45,7 +44,7 @@ export function OrdersListScreen({navigation}: OrdersListScreenProps) {
             renderItem={({item}) => (
               <OrderCard
                 order={item}
-                onPress={() => handleOrderPress(item)}
+                onPress={() => handleOrderPress(item.id)}
               />
             )}
             contentContainerStyle={styles.list}

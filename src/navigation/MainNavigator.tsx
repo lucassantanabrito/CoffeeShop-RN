@@ -35,7 +35,7 @@ export function MainNavigator() {
         component={CashierStack}
         options={{
           title: 'Caixa',
-          tabBarIcon: ({color}) => <CaixaIcon color={color} />,
+          tabBarIcon: CaixaIcon,
         }}
       />
       <Tab.Screen
@@ -43,7 +43,7 @@ export function MainNavigator() {
         component={BaristaTabs}
         options={{
           title: 'Barista',
-          tabBarIcon: ({color}) => <BaristaIcon color={color} />,
+          tabBarIcon: BaristaIcon,
         }}
       />
     </Tab.Navigator>

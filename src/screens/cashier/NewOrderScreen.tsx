@@ -32,16 +32,11 @@ export function NewOrderScreen({navigation}: NewOrderScreenProps) {
   const handleVerPedido = () => {
     if (!customerName.trim() || currentOrderItems.length === 0) return;
 
-    const order = {
-      id: String(Date.now()),
+    navigation.navigate('ConfirmOrder', {
       customerName: customerName.trim(),
       items: currentOrderItems,
-      status: 'pending' as const,
       total,
-      createdAt: Date.now(),
-    };
-
-    navigation.navigate('ConfirmOrder', {order});
+    });
   };
 
   return (

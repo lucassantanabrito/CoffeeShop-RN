@@ -7,8 +7,28 @@ import {useOrderStore} from '../../store/orderStore';
 import type {OrderDetailScreenProps} from '../../types/navigation';
 
 export function OrderDetailScreen({route, navigation}: OrderDetailScreenProps) {
-  const {order} = route.params;
-  const {deleteOrder, loadOrderForEditing, clearCurrentOrder} = useOrderStore();
+  const {orderId} = route.params;
+  const {orders, deleteOrder, loadOrderForEditing, clearCurrentOrder} = useOrderStore();
+  const order = orders.find(o => o.id === orderId);
+
+  const handleBack = () => {
+    navigation.goBack();
+  };
+
+  if (!order) {
+    return (
+      <SafeAreaView style={styles.safe} edges={['top']}>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <TouchableOpacity onPress={handleBack}>
+              <Text style={styles.backArrow}>←</Text>
+            </TouchableOpacity>
+            <Text style={styles.title}>Detalhes do Pedido</Text>
+          </View>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   const subtotal = order.items.reduce((sum, item) => sum + item.price, 0);
   const milkExtra = order.items.reduce((sum, item) => {
@@ -45,10 +65,6 @@ export function OrderDetailScreen({route, navigation}: OrderDetailScreenProps) {
         },
       ],
     );
-  };
-
-  const handleBack = () => {
-    navigation.goBack();
   };
 
   return (

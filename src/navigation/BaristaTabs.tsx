@@ -5,9 +5,10 @@ import {PendingScreen} from '../screens/barista/PendingScreen';
 import {InProgressScreen} from '../screens/barista/InProgressScreen';
 import {CompletedScreen} from '../screens/barista/CompletedScreen';
 import {colors} from '../theme/colors';
+import type {BaristaTabKey} from '../types/navigation';
 
 export function BaristaTabs() {
-  const [activeTab, setActiveTab] = useState('pending');
+  const [activeTab, setActiveTab] = useState<BaristaTabKey>('pending');
 
   const renderScreen = () => {
     switch (activeTab) {
