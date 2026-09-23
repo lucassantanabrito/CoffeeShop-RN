@@ -14,21 +14,32 @@ import {colors} from '../../theme/colors';
 import {useDrinkStore} from '../../store/drinkStore';
 import type {AddDrinkScreenProps} from '../../types/navigation';
 
-function parsePrice(value: string): number | null {
-  const normalized = value.trim().replace(',', '.').replace(/[^0-9.]/g, '');
-  if (!normalized) return null;
-  const parsed = Number(normalized);
-  return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
+const MAX_PRICE_CENTS = 99_999_99; // R$ 99.999,99
+
+function centsFromText(text: string): number {
+  const digits = text.replace(/\D/g, '').replace(/^0+(?=\d)/, '');
+  if (!digits) return 0;
+  return Math.min(parseInt(digits, 10), MAX_PRICE_CENTS);
+}
+
+function formatCentsAsBRL(cents: number): string {
+  const [reais, centavos] = (cents / 100).toFixed(2).split('.');
+  const reaisWithThousands = reais.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  return `R$ ${reaisWithThousands},${centavos}`;
 }
 
 export function AddDrinkScreen({navigation}: AddDrinkScreenProps) {
   const addDrink = useDrinkStore(state => state.addDrink);
 
   const [name, setName] = useState('');
-  const [priceText, setPriceText] = useState('');
+  const [priceCents, setPriceCents] = useState(0);
   const [hasMilk, setHasMilk] = useState(true);
 
-  const price = parsePrice(priceText);
+  const handlePriceChange = (text: string) => {
+    setPriceCents(centsFromText(text));
+  };
+
+  const price = priceCents > 0 ? priceCents / 100 : null;
   const isValid = name.trim().length > 0 && price !== null;
 
   const handleSave = () => {
@@ -62,9 +73,9 @@ export function AddDrinkScreen({navigation}: AddDrinkScreenProps) {
             style={styles.input}
             placeholder="R$ 0,00"
             placeholderTextColor={colors.text.secondary}
-            value={priceText}
-            onChangeText={setPriceText}
-            keyboardType="decimal-pad"
+            value={formatCentsAsBRL(priceCents)}
+            onChangeText={handlePriceChange}
+            keyboardType="number-pad"
           />
 
           <View style={styles.milkRow}>
