@@ -10,6 +10,7 @@ const mockOrder: Order = {
     {
       id: '1',
       type: 'latte',
+      label: 'Latte',
       quantity: 2,
       milk: 'vegetal',
       notes: '',
@@ -18,6 +19,7 @@ const mockOrder: Order = {
     {
       id: '2',
       type: 'espresso',
+      label: 'Espresso',
       quantity: 1,
       milk: 'normal',
       notes: '',
@@ -43,15 +45,15 @@ describe('OrderCard', () => {
 
   it('renders items when showItems is true', async () => {
     const {getByText} = await render(<OrderCard order={mockOrder} />);
-    expect(getByText(/2x latte/)).toBeTruthy();
-    expect(getByText(/1x espresso/)).toBeTruthy();
+    expect(getByText(/2x latte/i)).toBeTruthy();
+    expect(getByText(/1x espresso/i)).toBeTruthy();
   });
 
   it('does not render items when showItems is false', async () => {
     const {queryByText} = await render(
       <OrderCard order={mockOrder} showItems={false} />,
     );
-    expect(queryByText(/2x latte/)).toBeNull();
+    expect(queryByText(/2x latte/i)).toBeNull();
   });
 
   it('renders status chip', async () => {

@@ -17,7 +17,7 @@ describe('EmptyState', () => {
   });
 
   it('renders icon when provided', async () => {
-    const {getByText} = await render(
+    const {getByText, getByTestId} = await render(
       <EmptyState
         title="Vazio"
         message="Nada aqui"
@@ -25,7 +25,7 @@ describe('EmptyState', () => {
       />,
     );
     expect(getByText('Vazio')).toBeTruthy();
-    expect(getByText('🧾')).toBeTruthy();
+    expect(getByTestId('empty-state-icon')).toBeTruthy();
   });
 
   it('renders action button when provided', async () => {
@@ -38,6 +38,6 @@ describe('EmptyState', () => {
         onAction={onPress}
       />,
     );
-    expect(getByText('+ Criar')).toBeTruthy();
+    expect(getByText('Criar')).toBeTruthy();
   });
 });

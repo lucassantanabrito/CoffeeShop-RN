@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {Coffee, RefreshCw} from 'lucide-react-native';
 import {colors} from '../../theme/colors';
 import {OrderCard, EmptyState, BaristaTabBar} from '../../components';
 import {useOrderStore} from '../../store/orderStore';
@@ -23,7 +24,7 @@ export function PendingScreen({activeTab, onTabChange}: PendingScreenProps) {
       <View style={styles.header}>
         <Text style={styles.title}>Barista</Text>
         <View style={styles.iconPlaceholder}>
-          <Text style={styles.iconText}>☕</Text>
+          <Coffee size={20} color={colors.primary} />
         </View>
       </View>
 
@@ -34,7 +35,8 @@ export function PendingScreen({activeTab, onTabChange}: PendingScreenProps) {
           <EmptyState
             title="Nenhum pedido pendente"
             message="Todos os pedidos foram iniciados!"
-            icon="clock"
+            icon="clock3"
+            iconColor={colors.status.pending}
             iconBackgroundColor="#FEF3C7"
           />
         </View>
@@ -46,6 +48,7 @@ export function PendingScreen({activeTab, onTabChange}: PendingScreenProps) {
             <OrderCard
               order={item}
               actionLabel="Fazendo"
+              actionIcon={RefreshCw}
               onAction={() => handleStartOrder(item.id)}
             />
           )}
@@ -80,9 +83,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primaryLight,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  iconText: {
-    fontSize: 20,
   },
   content: {
     flex: 1,

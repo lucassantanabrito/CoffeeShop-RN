@@ -1,24 +1,15 @@
 import type {IOrderService} from './orderService';
-import type {IDrinkService, DrinkOption, MilkOption} from './drinkService';
+import type {IDrinkService, DrinkOption, MilkOption, NewDrinkInput} from './drinkService';
 import type {Order, CreateOrderDTO, OrderStatus, DrinkType, MilkType} from '../types/order';
 
-const DRINK_PRICES: Record<DrinkType, number> = {
-  espresso: 8.0,
-  latte: 18.0,
-  v60: 15.0,
-  mocha: 20.0,
-  chocolate_quente: 14.0,
-  cappuccino: 16.0,
-};
-
-const DRINK_LABELS: Record<DrinkType, string> = {
-  espresso: 'Espresso',
-  latte: 'Latte',
-  v60: 'V60',
-  mocha: 'Mocha',
-  chocolate_quente: 'Chocolate Quente',
-  cappuccino: 'Cappuccino',
-};
+const INITIAL_DRINKS: DrinkOption[] = [
+  {type: 'espresso', label: 'Espresso', price: 8.0, hasMilk: false},
+  {type: 'latte', label: 'Latte', price: 18.0, hasMilk: true},
+  {type: 'v60', label: 'V60', price: 15.0, hasMilk: false},
+  {type: 'mocha', label: 'Mocha', price: 20.0, hasMilk: true},
+  {type: 'chocolate_quente', label: 'Chocolate Quente', price: 14.0, hasMilk: true},
+  {type: 'cappuccino', label: 'Cappuccino', price: 16.0, hasMilk: true},
+];
 
 const MILK_OPTIONS: MilkOption[] = [
   {type: 'normal', label: 'Normal', priceAdd: 0},
@@ -86,12 +77,10 @@ export class MemoryOrderService implements IOrderService {
 }
 
 export class MemoryDrinkService implements IDrinkService {
+  private drinks: DrinkOption[] = INITIAL_DRINKS.map(drink => ({...drink}));
+
   getDrinkOptions(): DrinkOption[] {
-    return Object.entries(DRINK_PRICES).map(([type, price]) => ({
-      type: type as DrinkType,
-      label: DRINK_LABELS[type as DrinkType],
-      price,
-    }));
+    return [...this.drinks];
   }
 
   getMilkOptions(): MilkOption[] {
@@ -99,8 +88,22 @@ export class MemoryDrinkService implements IDrinkService {
   }
 
   getDrinkPrice(type: DrinkType, milk: MilkType): number {
-    const basePrice = DRINK_PRICES[type] ?? 0;
-    const milkAdd = MILK_OPTIONS.find(m => m.type === milk)?.priceAdd ?? 0;
+    const drink = this.drinks.find(d => d.type === type);
+    const basePrice = drink?.price ?? 0;
+    const milkAdd = drink?.hasMilk
+      ? MILK_OPTIONS.find(m => m.type === milk)?.priceAdd ?? 0
+      : 0;
     return basePrice + milkAdd;
+  }
+
+  addDrink(input: NewDrinkInput): DrinkOption {
+    const drink: DrinkOption = {
+      type: `custom-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      label: input.label,
+      price: input.price,
+      hasMilk: input.hasMilk,
+    };
+    this.drinks.push(drink);
+    return drink;
   }
 }

@@ -26,6 +26,7 @@ describe('OrderStore', () => {
       const drink: DrinkItem = {
         id: '1',
         type: 'latte',
+        label: 'Latte',
         quantity: 1,
         milk: 'normal',
         notes: '',
@@ -40,6 +41,7 @@ describe('OrderStore', () => {
       const drink1: DrinkItem = {
         id: '1',
         type: 'latte',
+        label: 'Latte',
         quantity: 1,
         milk: 'normal',
         notes: '',
@@ -48,6 +50,7 @@ describe('OrderStore', () => {
       const drink2: DrinkItem = {
         id: '2',
         type: 'espresso',
+        label: 'Espresso',
         quantity: 2,
         milk: 'normal',
         notes: '',
@@ -64,6 +67,7 @@ describe('OrderStore', () => {
       const drink: DrinkItem = {
         id: '1',
         type: 'latte',
+        label: 'Latte',
         quantity: 1,
         milk: 'normal',
         notes: '',
@@ -81,6 +85,7 @@ describe('OrderStore', () => {
       useOrderStore.getState().addDrinkToOrder({
         id: '1',
         type: 'espresso',
+        label: 'Espresso',
         quantity: 1,
         milk: 'normal',
         notes: '',
@@ -98,6 +103,7 @@ describe('OrderStore', () => {
       useOrderStore.getState().addDrinkToOrder({
         id: '1',
         type: 'latte',
+        label: 'Latte',
         quantity: 1,
         milk: 'normal',
         notes: '',
@@ -120,6 +126,7 @@ describe('OrderStore', () => {
       useOrderStore.getState().addDrinkToOrder({
         id: '1',
         type: 'espresso',
+        label: 'Espresso',
         quantity: 1,
         milk: 'normal',
         notes: '',
@@ -138,6 +145,7 @@ describe('OrderStore', () => {
       useOrderStore.getState().addDrinkToOrder({
         id: '1',
         type: 'espresso',
+        label: 'Espresso',
         quantity: 1,
         milk: 'normal',
         notes: '',
@@ -159,6 +167,7 @@ describe('OrderStore', () => {
       useOrderStore.getState().addDrinkToOrder({
         id: '1',
         type: 'espresso',
+        label: 'Espresso',
         quantity: 1,
         milk: 'normal',
         notes: '',
@@ -170,6 +179,7 @@ describe('OrderStore', () => {
       useOrderStore.getState().addDrinkToOrder({
         id: '2',
         type: 'latte',
+        label: 'Latte',
         quantity: 1,
         milk: 'normal',
         notes: '',
@@ -194,6 +204,7 @@ describe('OrderStore', () => {
       useOrderStore.getState().addDrinkToOrder({
         id: '1',
         type: 'espresso',
+        label: 'Espresso',
         quantity: 1,
         milk: 'normal',
         notes: '',

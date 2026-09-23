@@ -6,6 +6,7 @@ import type {DrinkItem} from '../../src/types/order';
 const mockDrink: DrinkItem = {
   id: '1',
   type: 'latte',
+  label: 'Latte',
   quantity: 2,
   milk: 'vegetal',
   notes: 'Sem acucar',
@@ -15,7 +16,7 @@ const mockDrink: DrinkItem = {
 describe('DrinkItemCard', () => {
   it('renders drink type', async () => {
     const {getByText} = await render(<DrinkItemCard item={mockDrink} />);
-    expect(getByText(/latte/)).toBeTruthy();
+    expect(getByText(/latte/i)).toBeTruthy();
   });
 
   it('renders quantity', async () => {
@@ -35,14 +36,14 @@ describe('DrinkItemCard', () => {
 
   it('renders remove button when onRemove is provided', async () => {
     const onRemove = jest.fn();
-    const {getByText} = await render(
+    const {getByTestId} = await render(
       <DrinkItemCard item={mockDrink} onRemove={onRemove} />,
     );
-    expect(getByText('×')).toBeTruthy();
+    expect(getByTestId('drink-item-remove')).toBeTruthy();
   });
 
   it('does not render remove button when onRemove is not provided', async () => {
-    const {queryByText} = await render(<DrinkItemCard item={mockDrink} />);
-    expect(queryByText('×')).toBeNull();
+    const {queryByTestId} = await render(<DrinkItemCard item={mockDrink} />);
+    expect(queryByTestId('drink-item-remove')).toBeNull();
   });
 });

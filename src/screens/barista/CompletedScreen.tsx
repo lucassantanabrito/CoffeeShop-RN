@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {Coffee, Award} from 'lucide-react-native';
 import {colors} from '../../theme/colors';
 import {OrderCard, EmptyState, BaristaTabBar} from '../../components';
 import {useOrderStore} from '../../store/orderStore';
@@ -20,7 +21,7 @@ export function CompletedScreen({activeTab, onTabChange}: CompletedScreenProps) 
       <View style={styles.header}>
         <Text style={styles.title}>Barista</Text>
         <View style={styles.iconPlaceholder}>
-          <Text style={styles.iconText}>☕</Text>
+          <Coffee size={20} color={colors.primary} />
         </View>
       </View>
 
@@ -31,7 +32,8 @@ export function CompletedScreen({activeTab, onTabChange}: CompletedScreenProps) 
           <EmptyState
             title="Nenhum pedido concluido"
             message="Os pedidos finalizados aparecerao aqui."
-            icon="checkcircle"
+            icon="partypopper"
+            iconColor={colors.status.completed}
             iconBackgroundColor="#D1FAE5"
           />
         </View>
@@ -46,7 +48,7 @@ export function CompletedScreen({activeTab, onTabChange}: CompletedScreenProps) 
           />
           <View style={styles.summaryCard}>
             <View style={styles.summaryIcon}>
-              <Text style={styles.summaryIconText}>🎉</Text>
+              <Award size={20} color={colors.status.completed} />
             </View>
             <View style={styles.summaryInfo}>
               <Text style={styles.summaryTitle}>Bom trabalho!</Text>
@@ -86,9 +88,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  iconText: {
-    fontSize: 20,
-  },
   content: {
     flex: 1,
     paddingHorizontal: 16,
@@ -113,9 +112,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.surface,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  summaryIconText: {
-    fontSize: 20,
   },
   summaryInfo: {
     flex: 1,

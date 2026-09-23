@@ -8,13 +8,11 @@ import {
   StyleSheet,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {ArrowLeft, ArrowRight, Plus} from 'lucide-react-native';
 import {colors} from '../../theme/colors';
 import {DrinkItemCard, AddDrinkSheet} from '../../components';
 import {useOrderStore} from '../../store/orderStore';
-import {MemoryDrinkService} from '../../services/memoryService';
 import type {NewOrderScreenProps} from '../../types/navigation';
-
-const drinkService = new MemoryDrinkService();
 
 export function NewOrderScreen({navigation}: NewOrderScreenProps) {
   const {
@@ -44,7 +42,7 @@ export function NewOrderScreen({navigation}: NewOrderScreenProps) {
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text style={styles.backArrow}>←</Text>
+            <ArrowLeft size={22} color={colors.text.primary} />
           </TouchableOpacity>
           <Text style={styles.title}>Novo Pedido</Text>
         </View>
@@ -87,7 +85,8 @@ export function NewOrderScreen({navigation}: NewOrderScreenProps) {
           <TouchableOpacity
             style={styles.addDrinkButton}
             onPress={() => setShowSheet(true)}>
-            <Text style={styles.addDrinkText}>+ Adicionar Bebida</Text>
+            <Plus size={16} color={colors.primary} />
+            <Text style={styles.addDrinkText}>Adicionar Bebida</Text>
           </TouchableOpacity>
         </ScrollView>
 
@@ -104,7 +103,8 @@ export function NewOrderScreen({navigation}: NewOrderScreenProps) {
             ]}
             onPress={handleVerPedido}
             disabled={!customerName.trim() || currentOrderItems.length === 0}>
-            <Text style={styles.goButtonText}>Ver Pedido →</Text>
+            <Text style={styles.goButtonText}>Ver Pedido</Text>
+            <ArrowRight size={18} color={colors.text.inverse} />
           </TouchableOpacity>
         </View>
       </View>
@@ -113,8 +113,6 @@ export function NewOrderScreen({navigation}: NewOrderScreenProps) {
         visible={showSheet}
         onClose={() => setShowSheet(false)}
         onAdd={addDrinkToOrder}
-        drinkOptions={drinkService.getDrinkOptions()}
-        milkOptions={drinkService.getMilkOptions()}
       />
     </SafeAreaView>
   );
@@ -134,11 +132,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingBottom: 12,
     gap: 12,
-  },
-  backArrow: {
-    fontSize: 24,
-    color: colors.text.primary,
-    fontWeight: '600',
   },
   title: {
     fontSize: 22,
@@ -199,12 +192,15 @@ const styles = StyleSheet.create({
     color: colors.primary,
   },
   addDrinkButton: {
+    flexDirection: 'row',
+    gap: 8,
     borderWidth: 1,
     borderColor: colors.border,
     borderStyle: 'dashed',
     borderRadius: 12,
     paddingVertical: 14,
     alignItems: 'center',
+    justifyContent: 'center',
     marginTop: 4,
   },
   addDrinkText: {
@@ -234,10 +230,13 @@ const styles = StyleSheet.create({
     color: colors.primary,
   },
   goButton: {
+    flexDirection: 'row',
+    gap: 8,
     backgroundColor: colors.primary,
     borderRadius: 26,
     paddingVertical: 16,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   goButtonDisabled: {
     opacity: 0.5,

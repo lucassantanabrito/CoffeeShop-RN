@@ -8,6 +8,8 @@ export type CashierStackParamList = {
   NewOrder: undefined;
   ConfirmOrder: { customerName: string; items: DrinkItem[]; total: number };
   OrderDetail: { orderId: string };
+  DrinksList: undefined;
+  AddDrink: undefined;
 };
 
 export type BaristaTabParamList = {
@@ -27,6 +29,8 @@ export type OrdersListScreenProps = NativeStackScreenProps<CashierStackParamList
 export type NewOrderScreenProps = NativeStackScreenProps<CashierStackParamList, 'NewOrder'>;
 export type ConfirmOrderScreenProps = NativeStackScreenProps<CashierStackParamList, 'ConfirmOrder'>;
 export type OrderDetailScreenProps = NativeStackScreenProps<CashierStackParamList, 'OrderDetail'>;
+export type DrinksListScreenProps = NativeStackScreenProps<CashierStackParamList, 'DrinksList'>;
+export type AddDrinkScreenProps = NativeStackScreenProps<CashierStackParamList, 'AddDrink'>;
 
 export type PendingScreenProps = CompositeScreenProps<
   BottomTabScreenProps<BaristaTabParamList, 'Pending'>,

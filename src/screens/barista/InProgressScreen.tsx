@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {Coffee, Check} from 'lucide-react-native';
 import {colors} from '../../theme/colors';
 import {OrderCard, EmptyState, BaristaTabBar} from '../../components';
 import {useOrderStore} from '../../store/orderStore';
@@ -23,7 +24,7 @@ export function InProgressScreen({activeTab, onTabChange}: InProgressScreenProps
       <View style={styles.header}>
         <Text style={styles.title}>Barista</Text>
         <View style={styles.iconPlaceholder}>
-          <Text style={styles.iconText}>☕</Text>
+          <Coffee size={20} color={colors.primary} />
         </View>
       </View>
 
@@ -34,7 +35,8 @@ export function InProgressScreen({activeTab, onTabChange}: InProgressScreenProps
           <EmptyState
             title="Nenhum pedido em andamento"
             message="Pedidos em preparo aparecerao aqui."
-            icon="hourglass"
+            icon="coffee"
+            iconColor={colors.primary}
             iconBackgroundColor={colors.primaryLight}
           />
         </View>
@@ -46,6 +48,7 @@ export function InProgressScreen({activeTab, onTabChange}: InProgressScreenProps
             <OrderCard
               order={item}
               actionLabel="Marcar como Pronto"
+              actionIcon={Check}
               onAction={() => handleCompleteOrder(item.id)}
             />
           )}
@@ -80,9 +83,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primaryLight,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  iconText: {
-    fontSize: 20,
   },
   content: {
     flex: 1,

@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, FlatList, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {List, CirclePlus} from 'lucide-react-native';
 import {colors} from '../../theme/colors';
 import {OrderCard, EmptyState} from '../../components';
 import {useOrderStore} from '../../store/orderStore';
@@ -23,9 +24,14 @@ export function OrdersListScreen({navigation}: OrdersListScreenProps) {
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>Pedidos</Text>
-          <TouchableOpacity style={styles.addButton} onPress={handleNewOrder}>
-            <Text style={styles.addButtonText}>+</Text>
-          </TouchableOpacity>
+          <View style={styles.headerActions}>
+            <TouchableOpacity onPress={() => navigation.navigate('DrinksList')}>
+              <List size={20} color={colors.text.secondary} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleNewOrder}>
+              <CirclePlus size={24} color={colors.primary} />
+            </TouchableOpacity>
+          </View>
         </View>
 
         {sortedOrders.length === 0 ? (
@@ -76,23 +82,12 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: colors.text.primary,
   },
-  addButton: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: colors.primary,
+  headerActions: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-  },
-  addButtonText: {
-    color: colors.text.inverse,
-    fontSize: 20,
-    fontWeight: '600',
+    gap: 16,
   },
   list: {
     paddingHorizontal: 16,
-  },
-  emptyIcon: {
-    fontSize: 40,
   },
 });

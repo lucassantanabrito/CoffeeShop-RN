@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, ScrollView, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {ArrowLeft, User, Check} from 'lucide-react-native';
 import {colors} from '../../theme/colors';
 import {StatusChip, DrinkItemCard} from '../../components';
 import {useOrderStore} from '../../store/orderStore';
@@ -36,7 +37,7 @@ export function ConfirmOrderScreen({route, navigation}: ConfirmOrderScreenProps)
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={handleBack}>
-            <Text style={styles.backArrow}>←</Text>
+            <ArrowLeft size={22} color={colors.text.primary} />
           </TouchableOpacity>
           <Text style={styles.title}>Confirmar Pedido</Text>
         </View>
@@ -49,7 +50,7 @@ export function ConfirmOrderScreen({route, navigation}: ConfirmOrderScreenProps)
         <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
           <View style={styles.customerCard}>
             <View style={styles.avatar}>
-              <Text style={styles.avatarText}>👤</Text>
+              <User size={22} color={colors.primary} />
             </View>
             <View>
               <Text style={styles.customerLabel}>Cliente</Text>
@@ -94,10 +95,12 @@ export function ConfirmOrderScreen({route, navigation}: ConfirmOrderScreenProps)
 
         <View style={styles.footer}>
           <TouchableOpacity style={styles.backButton} onPress={handleBack}>
-            <Text style={styles.backButtonText}>← Voltar</Text>
+            <ArrowLeft size={16} color={colors.text.primary} />
+            <Text style={styles.backButtonText}>Voltar</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
-            <Text style={styles.confirmButtonText}>✓ Finalizar</Text>
+            <Check size={16} color={colors.text.inverse} />
+            <Text style={styles.confirmButtonText}>Finalizar</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -119,11 +122,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingBottom: 12,
     gap: 12,
-  },
-  backArrow: {
-    fontSize: 24,
-    color: colors.text.primary,
-    fontWeight: '600',
   },
   title: {
     fontSize: 22,
@@ -167,9 +165,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primaryLight,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  avatarText: {
-    fontSize: 24,
   },
   customerLabel: {
     fontSize: 12,
@@ -240,9 +235,12 @@ const styles = StyleSheet.create({
   },
   backButton: {
     flex: 1,
+    flexDirection: 'row',
+    gap: 6,
     borderRadius: 26,
     paddingVertical: 14,
     alignItems: 'center',
+    justifyContent: 'center',
     borderWidth: 1,
     borderColor: colors.border,
   },
@@ -253,10 +251,13 @@ const styles = StyleSheet.create({
   },
   confirmButton: {
     flex: 1,
+    flexDirection: 'row',
+    gap: 6,
     backgroundColor: colors.primary,
     borderRadius: 26,
     paddingVertical: 14,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   confirmButtonText: {
     fontSize: 16,

@@ -4,6 +4,7 @@ export interface DrinkOption {
   type: DrinkType;
   label: string;
   price: number;
+  hasMilk: boolean;
 }
 
 export interface MilkOption {
@@ -12,8 +13,15 @@ export interface MilkOption {
   priceAdd: number;
 }
 
+export interface NewDrinkInput {
+  label: string;
+  price: number;
+  hasMilk: boolean;
+}
+
 export interface IDrinkService {
   getDrinkOptions(): DrinkOption[];
   getMilkOptions(): MilkOption[];
   getDrinkPrice(type: DrinkType, milk: MilkType): number;
+  addDrink(input: NewDrinkInput): DrinkOption;
 }

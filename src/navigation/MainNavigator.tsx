@@ -1,6 +1,8 @@
 import React from 'react';
-import {Text, StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
+import type {RouteProp} from '@react-navigation/native';
+import {Wallet, Coffee} from 'lucide-react-native';
 import {CashierStack} from './CashierStack';
 import {BaristaTabs} from './BaristaTabs';
 import {colors} from '../theme/colors';
@@ -8,12 +10,34 @@ import type {MainTabParamList} from '../types/navigation';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
+const TAB_BAR_STYLE = {
+  backgroundColor: colors.surface,
+  borderTopColor: colors.border,
+  height: 60,
+  paddingBottom: 8,
+};
+
+const CASHIER_ROUTES_WITHOUT_TAB_BAR = [
+  'NewOrder',
+  'ConfirmOrder',
+  'DrinksList',
+  'AddDrink',
+];
+
+function getCashierTabBarStyle(route: RouteProp<MainTabParamList, 'CashierTab'>) {
+  const focusedRouteName = getFocusedRouteNameFromRoute(route) ?? 'OrdersList';
+  if (CASHIER_ROUTES_WITHOUT_TAB_BAR.includes(focusedRouteName)) {
+    return {display: 'none' as const};
+  }
+  return TAB_BAR_STYLE;
+}
+
 function CaixaIcon({color}: {color: string}) {
-  return <Text style={[styles.icon, {color}]}>💰</Text>;
+  return <Wallet color={color} size={20} />;
 }
 
 function BaristaIcon({color}: {color: string}) {
-  return <Text style={[styles.icon, {color}]}>☕</Text>;
+  return <Coffee color={color} size={20} />;
 }
 
 export function MainNavigator() {
@@ -23,20 +47,16 @@ export function MainNavigator() {
         headerShown: false,
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.text.secondary,
-        tabBarStyle: {
-          backgroundColor: colors.surface,
-          borderTopColor: colors.border,
-          height: 60,
-          paddingBottom: 8,
-        },
+        tabBarStyle: TAB_BAR_STYLE,
       }}>
       <Tab.Screen
         name="CashierTab"
         component={CashierStack}
-        options={{
+        options={({route}) => ({
           title: 'Caixa',
           tabBarIcon: CaixaIcon,
-        }}
+          tabBarStyle: getCashierTabBarStyle(route),
+        })}
       />
       <Tab.Screen
         name="BaristaTab"
@@ -49,9 +69,3 @@ export function MainNavigator() {
     </Tab.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  icon: {
-    fontSize: 20,
-  },
-});

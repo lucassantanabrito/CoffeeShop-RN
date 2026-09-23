@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {Coffee, X} from 'lucide-react-native';
 import {colors} from '../theme/colors';
 import type {DrinkItem} from '../types/order';
 
@@ -18,11 +19,11 @@ export function DrinkItemCard({item, onRemove}: DrinkItemCardProps) {
   return (
     <View style={styles.container}>
       <View style={styles.iconCircle}>
-        <Text style={styles.iconText}>☕</Text>
+        <Coffee size={20} color={colors.primary} />
       </View>
 
       <View style={styles.info}>
-        <Text style={styles.name}>{item.type.replace('_', ' ')}</Text>
+        <Text style={styles.name}>{item.label}</Text>
         <View style={styles.tags}>
           <View style={styles.tag}>
             <Text style={styles.tagText}>{item.quantity}x</Text>
@@ -43,9 +44,9 @@ export function DrinkItemCard({item, onRemove}: DrinkItemCardProps) {
       <View style={styles.right}>
         <Text style={styles.price}>R$ {item.price.toFixed(2)}</Text>
         {onRemove && (
-          <Text style={styles.remove} onPress={onRemove}>
-            ×
-          </Text>
+          <TouchableOpacity onPress={onRemove} hitSlop={8} testID="drink-item-remove">
+            <X size={18} color={colors.text.secondary} />
+          </TouchableOpacity>
         )}
       </View>
     </View>
@@ -70,9 +71,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  iconText: {
-    fontSize: 20,
-  },
   info: {
     flex: 1,
     gap: 4,
@@ -81,7 +79,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: colors.text.primary,
-    textTransform: 'capitalize',
   },
   tags: {
     flexDirection: 'row',
@@ -112,11 +109,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: colors.text.primary,
-  },
-  remove: {
-    fontSize: 20,
-    color: colors.text.secondary,
-    fontWeight: '600',
   },
   notes: {
     fontSize: 12,

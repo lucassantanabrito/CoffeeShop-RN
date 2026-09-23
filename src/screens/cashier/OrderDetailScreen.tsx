@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, ScrollView, StyleSheet, Alert} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {ChevronLeft, User} from 'lucide-react-native';
 import {colors} from '../../theme/colors';
 import {StatusChip, DrinkItemCard} from '../../components';
 import {useOrderStore} from '../../store/orderStore';
@@ -21,7 +22,7 @@ export function OrderDetailScreen({route, navigation}: OrderDetailScreenProps) {
         <View style={styles.container}>
           <View style={styles.header}>
             <TouchableOpacity onPress={handleBack}>
-              <Text style={styles.backArrow}>←</Text>
+              <ChevronLeft size={24} color={colors.text.secondary} />
             </TouchableOpacity>
             <Text style={styles.title}>Detalhes do Pedido</Text>
           </View>
@@ -72,7 +73,7 @@ export function OrderDetailScreen({route, navigation}: OrderDetailScreenProps) {
       <View style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={handleBack}>
-            <Text style={styles.backArrow}>←</Text>
+            <ChevronLeft size={24} color={colors.text.secondary} />
           </TouchableOpacity>
           <Text style={styles.title}>Detalhes do Pedido</Text>
         </View>
@@ -80,7 +81,7 @@ export function OrderDetailScreen({route, navigation}: OrderDetailScreenProps) {
         <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
           <View style={styles.customerCard}>
             <View style={styles.avatar}>
-              <Text style={styles.avatarText}>👤</Text>
+              <User size={22} color={colors.primary} />
             </View>
             <View style={styles.customerInfo}>
               <Text style={styles.customerLabel}>Cliente</Text>
@@ -153,11 +154,6 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     gap: 12,
   },
-  backArrow: {
-    fontSize: 24,
-    color: colors.text.primary,
-    fontWeight: '600',
-  },
   title: {
     fontSize: 22,
     fontWeight: '700',
@@ -185,9 +181,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primaryLight,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  avatarText: {
-    fontSize: 24,
   },
   customerInfo: {
     flex: 1,

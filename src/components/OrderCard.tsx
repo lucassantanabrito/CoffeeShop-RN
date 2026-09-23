@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import type {LucideIcon} from 'lucide-react-native';
 import {colors} from '../theme/colors';
 import {StatusChip} from './StatusChip';
 import type {Order} from '../types/order';
@@ -8,6 +9,7 @@ interface OrderCardProps {
   order: Order;
   onPress?: () => void;
   actionLabel?: string;
+  actionIcon?: LucideIcon;
   onAction?: () => void;
   showItems?: boolean;
 }
@@ -16,6 +18,7 @@ export function OrderCard({
   order,
   onPress,
   actionLabel,
+  actionIcon: ActionIcon,
   onAction,
   showItems = true,
 }: OrderCardProps) {
@@ -36,7 +39,7 @@ export function OrderCard({
           {order.items.map(item => (
             <View key={item.id} style={styles.itemRow}>
               <Text style={styles.itemText}>
-                {item.quantity}x {item.type.replace('_', ' ')}
+                {item.quantity}x {item.label}
                 {item.milk !== 'normal' ? ` (${item.milk})` : ''}
               </Text>
               {item.notes ? (
@@ -54,6 +57,7 @@ export function OrderCard({
 
       {actionLabel && onAction && (
         <TouchableOpacity style={styles.actionButton} onPress={onAction}>
+          {ActionIcon && <ActionIcon size={16} color={colors.text.inverse} />}
           <Text style={styles.actionLabel}>{actionLabel}</Text>
         </TouchableOpacity>
       )}
@@ -122,6 +126,9 @@ const styles = StyleSheet.create({
     color: colors.text.primary,
   },
   actionButton: {
+    flexDirection: 'row',
+    gap: 6,
+    justifyContent: 'center',
     marginTop: 12,
     backgroundColor: colors.primary,
     borderRadius: 26,
