@@ -35,14 +35,16 @@ export function OrdersListScreen({navigation}: OrdersListScreenProps) {
         </View>
 
         {sortedOrders.length === 0 ? (
-          <EmptyState
-            title="Nenhum pedido ainda"
-            message="Quando voce criar pedidos, eles aparecerao aqui."
-            icon="receipt"
-            iconBackgroundColor={colors.primaryLight}
-            actionLabel="Criar Pedido"
-            onAction={handleNewOrder}
-          />
+          <View style={styles.content}>
+            <EmptyState
+              title="Nenhum pedido ainda"
+              message="Quando voce criar pedidos, eles aparecerao aqui."
+              icon="receipt"
+              iconBackgroundColor={colors.primaryLight}
+              actionLabel="Criar Pedido"
+              onAction={handleNewOrder}
+            />
+          </View>
         ) : (
           <FlatList
             data={sortedOrders}
@@ -86,6 +88,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 16,
+  },
+  content: {
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingTop: 40,
   },
   list: {
     paddingHorizontal: 16,
