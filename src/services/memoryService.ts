@@ -11,7 +11,7 @@ const INITIAL_DRINKS: DrinkOption[] = [
   {type: 'cappuccino', label: 'Cappuccino', price: 16.0, hasMilk: true},
 ];
 
-const MILK_OPTIONS: MilkOption[] = [
+export const MILK_OPTIONS: MilkOption[] = [
   {type: 'normal', label: 'Normal', priceAdd: 0},
   {type: 'zero', label: 'Zero', priceAdd: 2.0},
   {type: 'vegetal', label: 'Vegetal', priceAdd: 4.0},
@@ -79,11 +79,11 @@ export class MemoryOrderService implements IOrderService {
 export class MemoryDrinkService implements IDrinkService {
   private drinks: DrinkOption[] = INITIAL_DRINKS.map(drink => ({...drink}));
 
-  getDrinkOptions(): DrinkOption[] {
+  async getDrinkOptions(): Promise<DrinkOption[]> {
     return [...this.drinks];
   }
 
-  getMilkOptions(): MilkOption[] {
+  async getMilkOptions(): Promise<MilkOption[]> {
     return MILK_OPTIONS;
   }
 
@@ -96,7 +96,7 @@ export class MemoryDrinkService implements IDrinkService {
     return basePrice + milkAdd;
   }
 
-  addDrink(input: NewDrinkInput): DrinkOption {
+  async addDrink(input: NewDrinkInput): Promise<DrinkOption> {
     const drink: DrinkOption = {
       type: `custom-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
       label: input.label,

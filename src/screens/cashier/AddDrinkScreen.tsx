@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {
+  Alert,
   View,
   Text,
   TextInput,
@@ -34,6 +35,7 @@ export function AddDrinkScreen({navigation}: AddDrinkScreenProps) {
   const [name, setName] = useState('');
   const [priceCents, setPriceCents] = useState(0);
   const [hasMilk, setHasMilk] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
 
   const handlePriceChange = (text: string) => {
     setPriceCents(centsFromText(text));
@@ -42,10 +44,17 @@ export function AddDrinkScreen({navigation}: AddDrinkScreenProps) {
   const price = priceCents > 0 ? priceCents / 100 : null;
   const isValid = name.trim().length > 0 && price !== null;
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!isValid || price === null) return;
-    addDrink({label: name.trim(), price, hasMilk});
-    navigation.goBack();
+    setIsSaving(true);
+    try {
+      await addDrink({label: name.trim(), price, hasMilk});
+      navigation.goBack();
+    } catch {
+      Alert.alert('Erro', 'Não foi possível salvar a bebida. Tente novamente.');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -96,10 +105,12 @@ export function AddDrinkScreen({navigation}: AddDrinkScreenProps) {
 
         <View style={styles.footer}>
           <TouchableOpacity
-            style={[styles.saveButton, !isValid && styles.saveButtonDisabled]}
+            style={[styles.saveButton, (!isValid || isSaving) && styles.saveButtonDisabled]}
             onPress={handleSave}
-            disabled={!isValid}>
-            <Text style={styles.saveButtonText}>Salvar Bebida</Text>
+            disabled={!isValid || isSaving}>
+            <Text style={styles.saveButtonText}>
+              {isSaving ? 'Salvando...' : 'Salvar Bebida'}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>

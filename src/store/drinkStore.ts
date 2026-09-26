@@ -6,8 +6,10 @@ import {MemoryDrinkService} from '../services';
 interface DrinkState {
   drinks: DrinkOption[];
   milkOptions: MilkOption[];
-  fetchDrinks: () => void;
-  addDrink: (input: NewDrinkInput) => DrinkOption;
+  isLoading: boolean;
+  error: string | null;
+  fetchDrinks: () => Promise<void>;
+  addDrink: (input: NewDrinkInput) => Promise<DrinkOption>;
 }
 
 let drinkService: IDrinkService = new MemoryDrinkService();
@@ -17,14 +19,28 @@ export const setDrinkService = (service: IDrinkService) => {
 };
 
 export const useDrinkStore = create<DrinkState>(set => ({
-  drinks: drinkService.getDrinkOptions(),
-  milkOptions: drinkService.getMilkOptions(),
+  drinks: [],
+  milkOptions: [],
+  isLoading: false,
+  error: null,
 
-  fetchDrinks: () => set({drinks: drinkService.getDrinkOptions()}),
+  fetchDrinks: async () => {
+    set({isLoading: true, error: null});
+    try {
+      const [drinks, milkOptions] = await Promise.all([
+        drinkService.getDrinkOptions(),
+        drinkService.getMilkOptions(),
+      ]);
+      set({drinks, milkOptions, isLoading: false});
+    } catch (e) {
+      set({isLoading: false, error: 'Erro ao buscar bebidas'});
+      throw e;
+    }
+  },
 
-  addDrink: (input: NewDrinkInput) => {
-    const drink = drinkService.addDrink(input);
-    set({drinks: drinkService.getDrinkOptions()});
+  addDrink: async (input: NewDrinkInput) => {
+    const drink = await drinkService.addDrink(input);
+    set(state => ({drinks: [...state.drinks, drink]}));
     return drink;
   },
 }));

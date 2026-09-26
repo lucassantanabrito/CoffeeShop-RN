@@ -20,8 +20,8 @@ export interface NewDrinkInput {
 }
 
 export interface IDrinkService {
-  getDrinkOptions(): DrinkOption[];
-  getMilkOptions(): MilkOption[];
+  getDrinkOptions(): Promise<DrinkOption[]>;
+  getMilkOptions(): Promise<MilkOption[]>;
   getDrinkPrice(type: DrinkType, milk: MilkType): number;
-  addDrink(input: NewDrinkInput): DrinkOption;
+  addDrink(input: NewDrinkInput): Promise<DrinkOption>;
 }
