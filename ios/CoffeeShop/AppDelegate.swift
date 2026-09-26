@@ -21,15 +21,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     reactNativeDelegate = delegate
     reactNativeFactory = factory
 
-    window = UIWindow(frame: UIScreen.main.bounds)
-
-    factory.startReactNative(
-      withModuleName: "CoffeeShop",
-      in: window,
-      launchOptions: launchOptions
-    )
-
     return true
+  }
+
+  // Ciclo de vida baseado em Scene (obrigatório no SDK usado por este
+  // projeto). A criação da UIWindow e o startReactNative saem daqui e
+  // passam a acontecer em SceneDelegate.scene(_:willConnectTo:options:),
+  // quando a UIWindowScene já existe.
+  func application(
+    _ application: UIApplication,
+    configurationForConnecting connectingSceneSession: UISceneSession,
+    options: UIScene.ConnectionOptions
+  ) -> UISceneConfiguration {
+    let sceneConfiguration = UISceneConfiguration(
+      name: "Default Configuration",
+      sessionRole: connectingSceneSession.role
+    )
+    sceneConfiguration.delegateClass = SceneDelegate.self
+    return sceneConfiguration
   }
 }
 
@@ -44,5 +53,29 @@ class ReactNativeDelegate: RCTDefaultReactNativeFactoryDelegate {
 #else
     Bundle.main.url(forResource: "main", withExtension: "jsbundle")
 #endif
+  }
+}
+
+class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+  var window: UIWindow?
+
+  func scene(
+    _ scene: UIScene,
+    willConnectTo session: UISceneSession,
+    options connectionOptions: UIScene.ConnectionOptions
+  ) {
+    guard let windowScene = scene as? UIWindowScene else { return }
+    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+          let factory = appDelegate.reactNativeFactory else { return }
+
+    let window = UIWindow(windowScene: windowScene)
+    appDelegate.window = window
+    self.window = window
+
+    factory.startReactNative(
+      withModuleName: "CoffeeShop",
+      in: window,
+      launchOptions: nil
+    )
   }
 }
