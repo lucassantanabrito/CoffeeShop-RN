@@ -1,7 +1,12 @@
+import {Vibration} from 'react-native';
 import {io, Socket} from 'socket.io-client';
 import {SOCKET_URL} from '../config/api';
 import {useOrderStore} from '../store/orderStore';
 import {useDrinkStore} from '../store/drinkStore';
+
+// Padrão curto de vibração pra avisar o barista de um pedido novo:
+// vibra, pausa, vibra de novo (em ms).
+const NEW_ORDER_VIBRATION_PATTERN = [0, 200, 100, 200];
 
 let socket: Socket | null = null;
 
@@ -17,7 +22,10 @@ export function connectRealtimeSync(): void {
 
   socket = io(SOCKET_URL, {transports: ['websocket']});
 
-  socket.on('order:created', () => useOrderStore.getState().fetchOrders());
+  socket.on('order:created', () => {
+    Vibration.vibrate(NEW_ORDER_VIBRATION_PATTERN);
+    useOrderStore.getState().fetchOrders();
+  });
   socket.on('order:updated', () => useOrderStore.getState().fetchOrders());
   socket.on('order:deleted', () => useOrderStore.getState().fetchOrders());
 

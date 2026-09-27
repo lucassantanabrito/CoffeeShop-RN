@@ -6,6 +6,7 @@ import {Wallet, Coffee} from 'lucide-react-native';
 import {CashierStack} from './CashierStack';
 import {BaristaTabs} from './BaristaTabs';
 import {colors} from '../theme/colors';
+import {useOrderStore} from '../store/orderStore';
 import type {MainTabParamList} from '../types/navigation';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
@@ -41,6 +42,10 @@ function BaristaIcon({color}: {color: string}) {
 }
 
 export function MainNavigator() {
+  const pendingCount = useOrderStore(
+    state => state.orders.filter(o => o.status === 'pending').length,
+  );
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -64,6 +69,8 @@ export function MainNavigator() {
         options={{
           title: 'Barista',
           tabBarIcon: BaristaIcon,
+          tabBarBadge: pendingCount > 0 ? pendingCount : undefined,
+          tabBarBadgeStyle: {backgroundColor: colors.primary},
         }}
       />
     </Tab.Navigator>
